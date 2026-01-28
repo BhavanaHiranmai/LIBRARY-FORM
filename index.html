@@ -1,0 +1,124 @@
+
+<html>
+  <head>
+    <title>Library Login</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+    <script>
+      function checkName() {
+        const name = document.getElementById("name").value;
+        document.getElementById("e1").innerText =
+          name === "" ? "Name is required" : "";
+      }
+
+      function checkRegNo() {
+        const reg = document.getElementById("regno").value;
+        document.getElementById("e2").innerText =
+          reg === "" ? "Registration number required" : "";
+      }
+
+      function checkPhone() {
+        const phone = document.getElementById("phone").value;
+        const msg = document.getElementById("e3");
+
+        if (phone.length !== 10 || isNaN(phone)) {
+          msg.innerText = "Enter valid 10-digit phone number";
+        } else {
+          msg.innerText = "";
+        }
+      }
+
+      function checkEmail() {
+        const email = document.getElementById("email").value;
+        const msg = document.getElementById("e4");
+
+        if (email === "") {
+          msg.innerText = "Email is required";
+          return;
+        }
+
+        const at = email.indexOf("@");
+        const dot = email.lastIndexOf(".");
+
+        if (at < 1 || dot < at + 2 || dot === email.length - 1) {
+          msg.innerText = "Invalid email format";
+        } else {
+          msg.innerText = "";
+        }
+      }
+
+      function checkPassword() {
+        const pwd = document.getElementById("password").value;
+        document.getElementById("e5").innerText =
+          pwd.length < 6 ? "Minimum 6 characters required" : "";
+      }
+
+      function loginUser(event) {
+        event.preventDefault();
+
+        checkName();
+        checkRegNo();
+        checkPhone();
+        checkEmail();
+        checkPassword();
+
+        const errors = ["e1", "e2", "e3", "e4", "e5"];
+        let valid = true;
+
+        for (let id of errors) {
+          if (document.getElementById(id).innerText !== "") {
+            valid = false;
+            break;
+          }
+        }
+
+        if (!valid) {
+          document.getElementById("finalMsg").innerText =
+            "Fix errors before login";
+          return;
+        }
+
+        document.getElementById("finalMsg").innerText = "";
+        alert("Library Login Successful");
+        event.target.submit();
+      }
+    </script>
+
+    <div class="wrapper">
+      <h3>LIBRARY LOGIN</h3>
+
+      <form onsubmit="loginUser(event)">
+        <label>Name</label>
+        <input class="inputBox" id="name" onchange="checkName()" />
+        <p id="e1"></p>
+
+        <label>Registration Number</label>
+        <input class="inputBox" id="regno" onchange="checkRegNo()" />
+        <p id="e2"></p>
+
+        <label>Phone Number</label>
+        <input class="inputBox" id="phone" onchange="checkPhone()" />
+        <p id="e3"></p>
+
+        <label>Email</label>
+        <input class="inputBox" id="email" onchange="checkEmail()" />
+        <p id="e4"></p>
+
+        <label>Password</label>
+        <input
+          type="password"
+          class="inputBox"
+          id="password"
+          onchange="checkPassword()"
+        />
+        <p id="e5"></p>
+
+        <p id="finalMsg"></p>
+
+        <input type="submit" value="LOGIN" />
+      </form>
+    </div>
+  </body>
+</html>
